@@ -55,3 +55,11 @@ eventsapp/buck-out/
 
 # CocoaPods
 ios/Pods/
+
+
+__tests__/
+.buckconfig
+.eslintrc
+.prettierec.js
+.watchmanconfig
+bable.config.js
