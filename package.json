@@ -1,0 +1,57 @@
+{
+  "name": "eventsMobileApp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "iosSE": "react-native run-ios --simulator='iPhone SE (1st generation)'",
+    "ios8": "react-native run-ios --simulator='iPhone 8'",
+    "ios12": "react-native run-ios --simulator='iPhone 12 Pro Max'",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.13.2",
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-mapbox-gl/maps": "^8.1.0-rc.8",
+    "@react-navigation/bottom-tabs": "^5.9.2",
+    "@react-navigation/native": "^5.7.6",
+    "@react-navigation/stack": "^5.9.3",
+    "apisauce": "^1.1.2",
+    "ios-deploy": "^1.11.3",
+    "moment": "^2.29.1",
+    "moment-parseformat": "^3.0.0",
+    "moment-transform": "^1.0.1",
+    "react": "16.13.1",
+    "react-moment": "^1.0.0",
+    "react-native": "0.63.3",
+    "react-native-calendar-strip": "^2.0.9",
+    "react-native-fast-image": "^8.3.4",
+    "react-native-gesture-handler": "^1.8.0",
+    "react-native-minicalendar": "^1.0.5",
+    "react-native-reanimated": "^1.13.1",
+    "react-native-safe-area-context": "^3.1.9",
+    "react-native-screens": "^2.11.0",
+    "react-native-webview": "^11.0.0",
+    "react-native-youtube-iframe": "^1.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
+    "@react-native-community/eslint-config": "^1.1.0",
+    "babel-jest": "^25.1.0",
+    "eslint": "^6.5.1",
+    "jest": "^25.1.0",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "react-test-renderer": "16.13.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
+  }
+}
