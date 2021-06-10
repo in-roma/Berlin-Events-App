@@ -1,9 +1,9 @@
 ## Project / Berlin Cultural Events Mobile App / June 2021 (Work in Progress)
 Creating a Berlin Cultural Events Mobile App with React Native. 
 
-[Link to Admin client repo](https://github.com/in-roma/admin-berlin-events-app)
+[Link to admin repo](https://github.com/in-roma/admin-berlin-events-app)
 
-[Link to Server repo ](https://github.com/in-roma/events-app-server)
+[Link to server repo ](https://github.com/in-roma/events-app-server)
 
 ###  Simulator / Iphone 12 Pro Max
 ![](project.gif)
