@@ -1,7 +1,7 @@
 import { create } from 'apisauce';
 
 const apiClient = create({
-	baseURL: 'https://events-app-server-qdtle.ondigitalocean.app/api',
+	baseURL: 'https://berlin-events-app-server-73v23.ondigitalocean.app/api',
 });
 
 export default apiClient;
