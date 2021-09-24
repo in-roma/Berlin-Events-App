@@ -64,8 +64,8 @@ __tests__/
 bable.config.js
 
 .project2.gif
-.eslintrc.js
-.flowconfig
+\.eslintrc.js
+\.flowconfig
 .prettierrc.js
 .babel.config.js
 .metro.config.js
