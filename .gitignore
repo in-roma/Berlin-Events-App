@@ -59,8 +59,8 @@ ios/Pods/
 __tests__/
 .buckconfig
 .eslintrc.js
-.prettierrec.js
+.prettierrc.js
 .watchmanconfig
-.bable.config.js
+.metro.config.js
+project2.gif
 
-.project2.gif
