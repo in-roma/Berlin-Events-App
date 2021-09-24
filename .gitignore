@@ -57,10 +57,12 @@ ios/Pods/
 
 
 __tests__/
+.flowconfig
 .buckconfig
 .eslintrc.js
 .prettierrc.js
 .watchmanconfig
-.metro.config.js
+metro.config.js
 project2.gif
-
+selection.json
+yarn.lock
