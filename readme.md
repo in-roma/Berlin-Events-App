@@ -8,9 +8,6 @@ Creating a Berlin Cultural Events Mobile App with React Native.
 ###  Simulator / Iphone 12 Pro Max
 ![](project.gif)
 
-###  Device Video Capture / Iphone 6s
-![](project2.gif)
-
 ## Tech Stack
 
 **Client:** React Native
