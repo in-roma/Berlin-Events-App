@@ -67,6 +67,5 @@ bable.config.js
 .eslintrc.js
 .flowconfig
 .prettierrc.js
-babel.config.js
-metro.config.js
-yarn.lock
+.babel.config.js
+.metro.config.js
