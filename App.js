@@ -2,7 +2,16 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import SectionsNavigator from './app/navigation/SectionsNavigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LogBox } from 'react-native';
+// import { LogBox } from 'react-native';
+
+// Redux
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import eventsReducer from './app/store/reducers/eventsReducer';
+
+const rootReducer = combineReducers({ eventsReducer });
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const App = () => {
     let isDataStored = async (collection) => {
@@ -18,9 +27,12 @@ const App = () => {
             if (!isDataStored('eventsAgenda')) {
                 await AsyncStorage.setItem('eventsAgenda', JSON.stringify([]));
             }
-            if (!isDataStored('eventsReviews')) {
-                await AsyncStorage.setItem('eventsReviews', JSON.stringify([]));
+            if (!isDataStored('eventsPinned')) {
+                await AsyncStorage.setItem('eventsPinned', JSON.stringify([]));
             }
+            // if (!isDataStored('eventsReviews')) {
+            //     await AsyncStorage.setItem('eventsReviews', JSON.stringify([]));
+            // }
             if (!isDataStored('artistsSection')) {
                 await AsyncStorage.setItem(
                     'artistsSection',
@@ -38,12 +50,14 @@ const App = () => {
         }
     };
     localDB();
-    LogBox.ignoreLogs(['Warning: ...']);
-    LogBox.ignoreAllLogs();
+    // LogBox.ignoreLogs(['Warning: ...']);
+    // LogBox.ignoreAllLogs();
     return (
-        <NavigationContainer>
-            <SectionsNavigator />
-        </NavigationContainer>
+        <Provider store={store}>
+            <NavigationContainer>
+                <SectionsNavigator />
+            </NavigationContainer>
+        </Provider>
     );
 };
 

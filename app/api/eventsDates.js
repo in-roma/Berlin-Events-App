@@ -4,5 +4,5 @@ const endpoint = '/eventdates';
 const getEventDates = () => apiClient.get(endpoint);
 
 export default {
-	getEventDates,
+    getEventDates,
 };
