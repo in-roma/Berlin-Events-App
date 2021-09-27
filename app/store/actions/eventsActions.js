@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import eventsDates from '../../api/eventsDates';
 import clearData from '../store_utilities/utilities';
+import moment from 'moment';
 
 export const GET_EVENTS = 'GET_EVENTS';
 export const GET_EVENTS_AGENDA = 'GET_EVENTS_AGENDA';
@@ -10,26 +11,35 @@ export const getEvents = () => {
     try {
         return async (dispatch) => {
             const response = await eventsDates.getEventDates();
-            clearData('eventsStored');
+            if ((response.status = 200)) {
+                clearData('eventsStored');
+            }
+            const results = response.data;
+            const eventsFetchedRaw = results
+                .filter((event) =>
+                    moment(event.utc).isBetween(
+                        moment().utcOffset(0, true).subtract(12, 'hours'),
+                        moment().add(1, 'y')
+                    ),
+                )
+                .sort((a, b) => {
+                    return moment(a.utc).diff(b.utc);
+                });
+            // console.log('eventsFetchedRaw:', eventsFetchedRaw);
+ 
             const eventsFetched = await AsyncStorage.setItem(
                 'eventsStored',
-                JSON.stringify(response.data),
+                JSON.stringify(eventsFetchedRaw),
             );
             const eventsFetchedAsyncStorage = await AsyncStorage.getItem(
                 'eventsStored',
             );
-            if ((response.status = 200)) {
-                dispatch({
-                    type: GET_EVENTS,
-                    payload: response.data,
-                });
-            } else {
-                console.log('Unable to fetch data from the API BASE URL!');
-                dispatch({
+        //    console.log('eventsFetchedAsyncStorage:', eventsFetchedAsyncStorage);
+
+            dispatch({
                     type: GET_EVENTS,
                     payload: eventsFetchedAsyncStorage,
-                });
-            }
+            });
         };
     } catch (error) {
         console.log(error);

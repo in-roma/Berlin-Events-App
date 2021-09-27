@@ -22,7 +22,7 @@ const App = () => {
     const localDB = async () => {
         try {
             if (!isDataStored('eventsStored')) {
-                await AsyncStorage.setItem('eventsStored', JSON.stringify({}));
+                await AsyncStorage.setItem('eventsStored', JSON.stringify([]));
             }
             if (!isDataStored('eventsAgenda')) {
                 await AsyncStorage.setItem('eventsAgenda', JSON.stringify([]));

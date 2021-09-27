@@ -52,29 +52,6 @@ export default function SectionEventsScreen({ navigation }) {
     const [subMenuDisplay, setSubMenuDisplay] = useState(false);
     const [dateCalendar, setDateCalendar] = useState();
 
-    // Loader
-    const [loading, setLoading] = useState(false);
-
-    // Fetching events
-    const eventsReduced = useSelector((state) => state.eventsReducer);
-    const dispatch = useDispatch();
-    const fetchingEvents = () => dispatch(getEvents());
-
-    useEffect(() => {
-        fetchingEvents();
-    }, []);
-
-    // setDataEvents(eventsReduced.events);
-    // setDataEventsResult(
-    //     eventsReduced.events
-    //         .filter((event) => moment(event.utc).isBetween(timeNow, endOfDay))
-    //         .sort((a, b) => {
-    //             return moment(a.utc).diff(b.utc);
-    //         }),
-    // );
-
-    // setDataEventsFiltered(eventsReduced.events);
-
     // Moments functions
     const timeNow = moment().utcOffset(0, true).subtract(2, 'hours');
     const endOfDay = moment().utcOffset(0, true).endOf('day');
@@ -82,6 +59,36 @@ export default function SectionEventsScreen({ navigation }) {
     const tomorrow = moment().utcOffset(0, true).add(32, 'h');
     const friday = moment().weekday(5);
     const sunday = moment().weekday(7);
+
+    // Loader
+    const [loading, setLoading] = useState(false);
+
+    // Fetching events
+    const eventsReduced = useSelector((state) => state.eventsReducer);
+    const dispatch = useDispatch();
+
+    const fetchingEvents = () => dispatch(getEvents());
+    useEffect(() => {
+        fetchingEvents();
+    }, []);
+
+    console.log('this is eventsReduced :', eventsReduced.events);
+
+
+    // setDataEvents(eventsReduced.events);
+    // setDataEventsResult(
+    //         eventsReduced.events
+    //             .filter((event) =>
+    //                 moment(event.utc).isBetween(timeNow, endOfDay),
+    //             )
+    //             .sort((a, b) => {
+    //                 return moment(a.utc).diff(b.utc);
+    //             }),
+    //     );
+    // setDataEventsFiltered(eventsReduced.events);
+
+
+    console.log('this eventsReduced', eventsReduced.events);
 
     // Filter button states
     const [filterTopTab, setFilterTopTab] = useState(true);
