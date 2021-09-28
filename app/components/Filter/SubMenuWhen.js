@@ -2,7 +2,7 @@ import React, { createRef } from 'react';
 import { View, StyleSheet, ScrollView, Button, FlatList } from 'react-native';
 import colors from '../../UIsettings/colors';
 import ButtonFilterSub from './ButtonFilterSub';
-import filterWhen from './filterWhen';
+import filterWhenList from './filterWhenList';
 
 function SubMenuType({ filterType }) {
 	const typeRef = createRef();
@@ -22,11 +22,11 @@ function SubMenuType({ filterType }) {
 			<FlatList
 				contentContainerStyle={styles.scrollView}
 				horizontal={true}
-				data={filterWhen}
+				data={filterWhenList}
 				keyExtractor={(element) => element.when.toString()}
 				renderItem={({ item }, index) => (
 					<ButtonFilterSub
-						onPress={() => filterType(item.when)}
+						onPress={() => filterType("when",item.when)}
 						type={item.when}
 						name={item.when}
 						text={item.when}

@@ -76,11 +76,16 @@ const [subMenuDisplay, setSubMenuDisplay] = useState(false);
 const [dateCalendar, setDateCalendar] = useState();
 
 // Filtering function
-const handleFilterType = (type, when) => {
-        setFilterTypeName(type);
-        setFilterWhenName(when);
+const handleFilterType = (type, value) => {
+
+        dataEventsReceived = dispatch(getEventsFilteredType(filterType, filterWhen))
         setSubMenuDisplay(false);
-        dataEventsReceived = dispatch(getEventsFilteredType(type, when))
+        if (type === "what"){
+        setFilterTypeName(value);}
+
+        if (type === "when"){
+        setFilterWhenName(value);
+        }
 };
 
     // const dateSelected = (date) => {
@@ -308,15 +313,15 @@ const handleFilterType = (type, when) => {
                         allBtn={handleFilterTypeMain}
                         nowBtn={handleFilterWhenMain}
                         filter="filter"
-                        filterType={filterTypeName}
-                        filterWhen={filterWhenName}
+                        filterTypeName={filterTypeName}
+                        filterTypeWhen={filterWhenName}
                     />
                     {subMenuDisplay && (
                         <View style={styles.subFilterMenuContainer}>
                             {typeSubmenu ? (
-                                <SubMenuType filterType={handleFilterType(filterType, filterWhen)} />
+                                <SubMenuType filterType={handleFilterType} />
                             ) : (
-                                <SubMenuWhen filterType={handleFilterType(filterType, filterWhen)} />
+                                <SubMenuWhen filterType={handleFilterType} />
                             )}
                         </View>
                     )}

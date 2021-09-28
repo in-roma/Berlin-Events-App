@@ -1,4 +1,4 @@
-const filterWhen = [
+const filterWhenList = [
 	{
 		when: 'Now',
 	},
@@ -16,4 +16,4 @@ const filterWhen = [
 	},
 ];
 
-export default filterWhen;
+export default filterWhenList;

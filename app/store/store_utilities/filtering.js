@@ -8,8 +8,6 @@ const tomorrow = moment().utcOffset(0, true).add(32, 'h');
 const friday = moment().weekday(5);
 const sunday = moment().weekday(7);
 
-
-
 export const typeEventsFiltering = (data, type, when) => {
     const typeFilterResults = []
     typeFilterResults = data; 

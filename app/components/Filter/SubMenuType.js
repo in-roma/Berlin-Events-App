@@ -24,7 +24,7 @@ function SubMenuType({ filterType }) {
 				keyExtractor={(element) => element.name.toString()}
 				renderItem={({ item }, index) => (
 					<ButtonFilterSub
-						onPress={() => filterType(item.type, item.name)}
+						onPress={() => filterType("what", item.type)}
 						type={item.type}
 						name={item.name}
 						text={item.name}

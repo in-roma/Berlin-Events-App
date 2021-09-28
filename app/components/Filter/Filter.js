@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import colors from '../../UIsettings/colors';
 
-function Filter({ data, allBtn, nowBtn, filterType, filterWhen }) {
+function Filter({ data, allBtn, nowBtn, filterTypeName, filterTypeWhen }) {
 	const separator = () => {
 		return (
 			<View
@@ -25,10 +25,10 @@ function Filter({ data, allBtn, nowBtn, filterType, filterWhen }) {
 			<View style={styles.mainFilter}>
 				{/* <Text style={styles.logo}>52.13/ B</Text> */}
 				<TouchableWithoutFeedback onPress={allBtn}>
-					<Text style={styles.typeBtn}>{filterType}</Text>
+					<Text style={styles.typeBtn}>{filterTypeName}</Text>
 				</TouchableWithoutFeedback>
 				<TouchableWithoutFeedback onPress={nowBtn}>
-					<Text style={styles.whenBtn}>{filterWhen}</Text>
+					<Text style={styles.whenBtn}>{filterTypeWhen}</Text>
 				</TouchableWithoutFeedback>
 			</View>
 		</View>
