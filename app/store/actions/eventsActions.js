@@ -52,12 +52,15 @@ export const getEvents = () => {
 
 
 export const getEventsFilteredType = (type, when) => {
+    const filtered = [];
     try {
         return async (dispatch) => {
                 const eventsFilteredAsyncStorage = await AsyncStorage.getItem(
-                'eventsStored',
-            );
-            let filtered = typeEventsFiltering(JSON.parse(eventsFilteredAsyncStorage), type, when);
+                'eventsStored');
+            try {
+            filtered = await typeEventsFiltering(JSON.parse(eventsFilteredAsyncStorage), type, when);                
+            } catch (error) {        
+            }
 
             dispatch({
                     type: GET_EVENTS_FILTERED_TYPE,

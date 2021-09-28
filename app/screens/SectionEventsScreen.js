@@ -57,16 +57,16 @@ const [filterTab, setFilterTab] = useState(true);
 const [filterText, setFilterText] = useState('MAP');
 
 // Filter display submenu type
-const handleAllBtn = () => {
+const handleFilterTypeMain = () => {
         setTypeSubmenu(true);
         setSubMenuDisplay(true);
 };
-const HandleNowBtn = () => {
+const handleFilterWhenMain = () => {
         setTypeSubmenu(false);
         setSubMenuDisplay(true);
 };
 
-// Filter Buttons states
+// Filter Buttons displays/states
 const [filterType, setFilterType] = useState('All');
 const [filterTypeName, setFilterTypeName] = useState('All');
 const [filterWhen, setFilterWhen] = useState('Now');
@@ -80,11 +80,9 @@ const handleFilterType = (type, when) => {
         setFilterTypeName(type);
         setFilterWhenName(when);
         setSubMenuDisplay(false);
-
         dataEventsReceived = dispatch(getEventsFilteredType(type, when))
 };
 
- 
     // const dateSelected = (date) => {
     //     const filtering = dataEventsFiltered.filter((ele) =>
     //         moment(ele.utc).isSame(date, 'day'),
@@ -307,8 +305,8 @@ const handleFilterType = (type, when) => {
             {filterTopTab && (
                 <>
                     <Filter
-                        allBtn={handleAllBtn}
-                        nowBtn={HandleNowBtn}
+                        allBtn={handleFilterTypeMain}
+                        nowBtn={handleFilterWhenMain}
                         filter="filter"
                         filterType={filterTypeName}
                         filterWhen={filterWhenName}

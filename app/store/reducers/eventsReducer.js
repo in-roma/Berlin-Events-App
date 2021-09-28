@@ -7,7 +7,7 @@ import {
 
 const inialState = {
     events: {},
-    eventsFiltered: [],
+    eventsFiltered: {},
     eventsAgenda: [],
     pinnedEvents: [],
 };

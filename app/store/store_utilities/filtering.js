@@ -1,4 +1,5 @@
 import moment from 'moment';
+
 // Moments functions
 const timeNow = moment().utcOffset(0, true).subtract(2, 'hours');
 const endOfDay = moment().utcOffset(0, true).endOf('day');
@@ -10,8 +11,8 @@ const sunday = moment().weekday(7);
 
 
 export const typeEventsFiltering = (data, type, when) => {
-
-    const typeFilterResults = data; 
+    const typeFilterResults = []
+    typeFilterResults = data; 
 
         if (type !== 'All' && when == 'Now') {
             typeFilterResults = data.filter(
