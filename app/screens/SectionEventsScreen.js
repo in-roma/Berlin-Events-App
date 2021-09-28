@@ -34,18 +34,6 @@ import { getEvents,getEventsFilteredType } from '../store/actions/eventsActions'
 
 export default function SectionEventsScreen({ navigation }) {
 
-// Database state management
-const [dataEvents, setDataEvents] = useState([]);
-const [dataEventsResult, setDataEventsResult] = useState();
-
-// Moments functions
-const timeNow = moment().utcOffset(0, true).subtract(2, 'hours');
-const endOfDay = moment().utcOffset(0, true).endOf('day');
-const night = moment().utcOffset(0, true).endOf('day').subtract(5, 'hours');
-const tomorrow = moment().utcOffset(0, true).add(32, 'h');
-const friday = moment().weekday(5);
-const sunday = moment().weekday(7);
-
 // Loader
 const [loading, setLoading] = useState(false);
 
@@ -78,8 +66,7 @@ const HandleNowBtn = () => {
         setSubMenuDisplay(true);
 };
 
-// Filter Data states
-const [dataEventsFiltered, setDataEventsFiltered] = useState(dataEvents);
+// Filter Buttons states
 const [filterType, setFilterType] = useState('All');
 const [filterTypeName, setFilterTypeName] = useState('All');
 const [filterWhen, setFilterWhen] = useState('Now');
@@ -88,27 +75,27 @@ const [typeSubmenu, setTypeSubmenu] = useState(true);
 const [subMenuDisplay, setSubMenuDisplay] = useState(false);
 const [dateCalendar, setDateCalendar] = useState();
 
-// Filtering type
+// Filtering function
 const handleFilterType = (type, when) => {
         setFilterTypeName(type);
         setFilterWhenName(when);
-        setSubMenuDisplay(true);
+        setSubMenuDisplay(false);
 
         dataEventsReceived = dispatch(getEventsFilteredType(type, when))
 };
 
  
-    const dateSelected = (date) => {
-        const filtering = dataEventsFiltered.filter((ele) =>
-            moment(ele.utc).isSame(date, 'day'),
-        );
-        setDataEventsResult(
-            filtering.sort((a, b) => {
-                return moment(a.utc).diff(b.utc);
-            }),
-        );
+    // const dateSelected = (date) => {
+    //     const filtering = dataEventsFiltered.filter((ele) =>
+    //         moment(ele.utc).isSame(date, 'day'),
+    //     );
+    //     setDataEventsResult(
+    //         filtering.sort((a, b) => {
+    //             return moment(a.utc).diff(b.utc);
+    //         }),
+    //     );
 
-    };
+    // };
 
     // Map view
     const [mapView, setMapView] = useState(false);
@@ -141,7 +128,6 @@ const handleFilterType = (type, when) => {
     const handlePinView = (event) => {
         setPinView(true);
         setPinList([...pinList, event]);
-        // console.log(pinList);
     };
 
     const closePinWindow = () => {
@@ -457,7 +443,7 @@ const handleFilterType = (type, when) => {
                 />
             )}
             {mapView && (
-                <MapView style={styles.mapView} data={dataEventsResult} />
+                <MapView style={styles.mapView} data={dataEventsReceived} />
             )}
             {messageWindow && (
                 <Message type={messageType} content={messageContent} />

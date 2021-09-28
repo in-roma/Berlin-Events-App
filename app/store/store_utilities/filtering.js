@@ -1,4 +1,13 @@
 import moment from 'moment';
+// Moments functions
+const timeNow = moment().utcOffset(0, true).subtract(2, 'hours');
+const endOfDay = moment().utcOffset(0, true).endOf('day');
+const night = moment().utcOffset(0, true).endOf('day').subtract(5, 'hours');
+const tomorrow = moment().utcOffset(0, true).add(32, 'h');
+const friday = moment().weekday(5);
+const sunday = moment().weekday(7);
+
+
 
 export const typeEventsFiltering = (data, type, when) => {
 
