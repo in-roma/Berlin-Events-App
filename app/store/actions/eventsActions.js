@@ -2,8 +2,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import eventsDates from '../../api/eventsDates';
 import clearData from '../store_utilities/utilities';
 import moment from 'moment';
+import typeEventsFiltering from '../store_utilities/filtering';
+
 
 export const GET_EVENTS = 'GET_EVENTS';
+export const GET_EVENTS_FILTERED_TYPE = 'GET_EVENTS_FILTERED';
 export const GET_EVENTS_AGENDA = 'GET_EVENTS_AGENDA';
 export const GET_EVENTS_PINNED = 'GET_EVENTS_PINNED';
 
@@ -38,13 +41,52 @@ export const getEvents = () => {
 
             dispatch({
                     type: GET_EVENTS,
-                    payload: eventsFetchedAsyncStorage,
+                    payload: JSON.parse(eventsFetchedAsyncStorage),
             });
         };
     } catch (error) {
         console.log(error);
     }
 };
+
+
+
+export const getEventsFilteredType = (type, when) => {
+    try {
+        return async (dispatch) => {
+                const eventsFilteredAsyncStorage = await AsyncStorage.getItem(
+                'eventsStored',
+            );
+            let filtered = typeEventsFiltering(JSON.parse(eventsFilteredAsyncStorage), type, when);
+
+            dispatch({
+                    type: GET_EVENTS_FILTERED_TYPE,
+                    payload: filtered,
+            });
+
+        }
+
+
+    } catch (error) {
+        
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const getEventsAgenda = () => {
     try {

@@ -28,285 +28,76 @@ import PinCard from '../components/PinView//PinCard';
 import Message from '../navigation/Message';
 import ArtistCardEventSection from '../components/EventSection/ArtistCardEventSection';
 
-// Filtering functions
-
-// API
-// import eventdatesApi from '../api/eventsDates';
-
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { getEvents } from '../store/actions/eventsActions';
+import { getEvents,getEventsFilteredType } from '../store/actions/eventsActions';
 
 export default function SectionEventsScreen({ navigation }) {
-    // Database state management
-    const [dataEvents, setDataEvents] = useState([]);
-    const [dataEventsResult, setDataEventsResult] = useState();
 
-    // Filter Data states
-    const [dataEventsFiltered, setDataEventsFiltered] = useState(dataEvents);
-    const [filterType, setFilterType] = useState('All');
-    const [filterTypeName, setFilterTypeName] = useState('All');
-    const [filterWhen, setFilterWhen] = useState('Now');
-    const [filterWhenName, setFilterWhenName] = useState('Now');
-    const [typeSubmenu, setTypeSubmenu] = useState(true);
-    const [subMenuDisplay, setSubMenuDisplay] = useState(false);
-    const [dateCalendar, setDateCalendar] = useState();
+// Database state management
+const [dataEvents, setDataEvents] = useState([]);
+const [dataEventsResult, setDataEventsResult] = useState();
 
-    // Moments functions
-    const timeNow = moment().utcOffset(0, true).subtract(2, 'hours');
-    const endOfDay = moment().utcOffset(0, true).endOf('day');
-    const night = moment().utcOffset(0, true).endOf('day').subtract(5, 'hours');
-    const tomorrow = moment().utcOffset(0, true).add(32, 'h');
-    const friday = moment().weekday(5);
-    const sunday = moment().weekday(7);
+// Moments functions
+const timeNow = moment().utcOffset(0, true).subtract(2, 'hours');
+const endOfDay = moment().utcOffset(0, true).endOf('day');
+const night = moment().utcOffset(0, true).endOf('day').subtract(5, 'hours');
+const tomorrow = moment().utcOffset(0, true).add(32, 'h');
+const friday = moment().weekday(5);
+const sunday = moment().weekday(7);
 
-    // Loader
-    const [loading, setLoading] = useState(false);
+// Loader
+const [loading, setLoading] = useState(false);
 
-    // Fetching events
-    const eventsReduced = useSelector((state) => state.eventsReducer);
-    const dispatch = useDispatch();
+// Fetching events
+const eventsReduced = useSelector((state) => state.eventsReducer);
+const dispatch = useDispatch();
 
-    const fetchingEvents = () => dispatch(getEvents());
+const fetchingEvents = () => dispatch(getEvents());
     useEffect(() => {
         fetchingEvents();
-    }, []);
+}, []);
 
-    console.log('this is eventsReduced :', eventsReduced.events);
+let dataEventsReceived = eventsReduced.events;
 
+// console.log('this is eventsReduced :', eventsReduced.events);
+console.log('this dataEventsReceived', dataEventsReceived);
 
-    // setDataEvents(eventsReduced.events);
-    // setDataEventsResult(
-    //         eventsReduced.events
-    //             .filter((event) =>
-    //                 moment(event.utc).isBetween(timeNow, endOfDay),
-    //             )
-    //             .sort((a, b) => {
-    //                 return moment(a.utc).diff(b.utc);
-    //             }),
-    //     );
-    // setDataEventsFiltered(eventsReduced.events);
+// Filter button states
+const [filterTopTab, setFilterTopTab] = useState(true);
+const [filterTab, setFilterTab] = useState(true);
+const [filterText, setFilterText] = useState('MAP');
 
-
-    console.log('this eventsReduced', eventsReduced.events);
-
-    // Filter button states
-    const [filterTopTab, setFilterTopTab] = useState(true);
-    const [filterTab, setFilterTab] = useState(true);
-    const [filterText, setFilterText] = useState('MAP');
-
-    // Filter display submenu type
-    const handleAllBtn = () => {
+// Filter display submenu type
+const handleAllBtn = () => {
         setTypeSubmenu(true);
         setSubMenuDisplay(true);
-    };
-    const HandleNowBtn = () => {
+};
+const HandleNowBtn = () => {
         setTypeSubmenu(false);
         setSubMenuDisplay(true);
-    };
+};
 
-    // Filtering type
-    const handleFilterType = (type, name) => {
-        if (type !== 'All' && filterWhenName == 'Now') {
-            const filtering = dataEventsFiltered
-                .filter(
-                    (ele) =>
-                        moment(ele.utc).isBetween(timeNow, endOfDay) &&
-                        ele.event.type == type,
-                )
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type !== 'All' && filterWhenName == 'Tonight') {
-            const filtering = dataEventsFiltered
-                .filter(
-                    (ele) =>
-                        moment(ele.utc).isBetween(night, endOfDay) &&
-                        ele.event.type == type,
-                )
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type !== 'All' && filterWhenName == 'Tomorrow') {
-            const filtering = dataEventsFiltered
-                .filter(
-                    (ele) =>
-                        moment(ele.utc).isSame(tomorrow, 'day') &&
-                        ele.event.type == type,
-                )
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type !== 'All' && filterWhenName == 'This Weekend') {
-            const filtering = dataEventsFiltered
-                .filter(
-                    (ele) =>
-                        moment(ele.utc).isBetween(friday, sunday) &&
-                        ele.event.type == type,
-                )
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type !== 'All' && filterWhenName == 'Date') {
-            const filtering = dataEventsFiltered
-                .filter((ele) => ele.event.type == type)
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsFiltered(filtering);
-        }
+// Filter Data states
+const [dataEventsFiltered, setDataEventsFiltered] = useState(dataEvents);
+const [filterType, setFilterType] = useState('All');
+const [filterTypeName, setFilterTypeName] = useState('All');
+const [filterWhen, setFilterWhen] = useState('Now');
+const [filterWhenName, setFilterWhenName] = useState('Now');
+const [typeSubmenu, setTypeSubmenu] = useState(true);
+const [subMenuDisplay, setSubMenuDisplay] = useState(false);
+const [dateCalendar, setDateCalendar] = useState();
 
-        if (type == 'All' && filterWhenName == 'Now') {
-            const filtering = dataEventsFiltered
-                .filter((ele) => moment(ele.utc).isBetween(timeNow, endOfDay))
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type == 'All' && filterWhenName == 'Tonight') {
-            const filtering = dataEventsFiltered
-                .filter((ele) => moment(ele.utc).isBetween(night, endOfDay))
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type == 'All' && filterWhenName == 'Tomorrow') {
-            const filtering = dataEventsFiltered
-                .filter((ele) => moment(ele.utc).isSame(tomorrow, 'day'))
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type == 'All' && filterWhenName == 'This Weekend') {
-            const filtering = dataEventsFiltered
-                .filter((ele) => moment(ele.utc).isBetween(friday, sunday))
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type == 'All' && filterWhenName == 'Date') {
-            setDataEventsFiltered(dataEventsFiltered);
-        }
-        setFilterType(name);
-        setFilterTypeName(name);
-        setSubMenuDisplay(false);
-    };
+// Filtering type
+const handleFilterType = (type, when) => {
+        setFilterTypeName(type);
+        setFilterWhenName(when);
+        setSubMenuDisplay(true);
 
-    // Filtering when
-    const handleFilterWhen = (name) => {
-        const type = filterTypeName;
+        dataEventsReceived = dispatch(getEventsFilteredType(type, when))
+};
 
-        // setDataEventsFiltered(dataEvents);
-
-        if (type !== 'All' && name == 'Now') {
-            const filtering = dataEventsFiltered
-                .filter(
-                    (ele) =>
-                        moment(ele.utc).isBetween(timeNow, endOfDay) &&
-                        ele.event.type == type,
-                )
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type !== 'All' && name == 'Tonight') {
-            const filtering = dataEventsFiltered
-                .filter(
-                    (ele) =>
-                        moment(ele.utc).isBetween(night, endOfDay) &&
-                        ele.event.type == type,
-                )
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type !== 'All' && name == 'Tomorrow') {
-            const filtering = dataEventsFiltered
-                .filter(
-                    (ele) =>
-                        moment(ele.utc).isSame(tomorrow, 'day') &&
-                        ele.event.type == type,
-                )
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type !== 'All' && name == 'This Weekend') {
-            const filtering = dataEventsFiltered
-                .filter(
-                    (ele) =>
-                        moment(ele.utc).isBetween(friday, sunday) &&
-                        ele.event.type == type,
-                )
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type !== 'All' && name == 'Date') {
-            const filtering = dataEventsFiltered
-                .filter((ele) => ele.event.type == type)
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsFiltered(filtering);
-        }
-
-        if (type == 'All' && name == 'Now') {
-            const filtering = dataEventsFiltered
-                .filter((ele) => moment(ele.utc).isBetween(timeNow, endOfDay))
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type == 'All' && name == 'Tonight') {
-            const filtering = dataEventsFiltered
-                .filter((ele) => moment(ele.utc).isBetween(night, endOfDay))
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type == 'All' && name == 'Tomorrow') {
-            const filtering = dataEventsFiltered
-                .filter((ele) => moment(ele.utc).isSame(tomorrow, 'day'))
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-        if (type == 'All' && name == 'This Weekend') {
-            const filtering = dataEventsFiltered
-                .filter((ele) => moment(ele.utc).isBetween(friday, sunday))
-                .sort((a, b) => {
-                    return moment(a.utc).diff(b.utc);
-                });
-            setDataEventsResult(filtering);
-        }
-
-        if (type == 'All' && name == 'Date') {
-        }
-        setFilterWhen(name);
-        setFilterWhenName(name);
-        setSubMenuDisplay(false);
-    };
-
+ 
     const dateSelected = (date) => {
         const filtering = dataEventsFiltered.filter((ele) =>
             moment(ele.utc).isSame(date, 'day'),
@@ -316,12 +107,7 @@ export default function SectionEventsScreen({ navigation }) {
                 return moment(a.utc).diff(b.utc);
             }),
         );
-        // const dateFilter = (
-        // 	<Moment format="DD.MM.YY" style={styles.tagTime} element={Text}>
-        // 		{date}
-        // 	</Moment>
-        // );
-        // setFilterWhen(Date);
+
     };
 
     // Map view
@@ -544,9 +330,9 @@ export default function SectionEventsScreen({ navigation }) {
                     {subMenuDisplay && (
                         <View style={styles.subFilterMenuContainer}>
                             {typeSubmenu ? (
-                                <SubMenuType filterType={handleFilterType} />
+                                <SubMenuType filterType={handleFilterType(filterType, filterWhen)} />
                             ) : (
-                                <SubMenuWhen filterType={handleFilterWhen} />
+                                <SubMenuWhen filterType={handleFilterType(filterType, filterWhen)} />
                             )}
                         </View>
                     )}
@@ -622,7 +408,7 @@ export default function SectionEventsScreen({ navigation }) {
                     ItemSeparatorComponent={separator}
                     ListFooterComponentStyle={footer}
                     style={flatlistOp}
-                    data={dataEventsResult}
+                    data={eventsReduced.events}
                     keyExtractor={(element, index) =>
                         index + element._id.toString()
                     }
