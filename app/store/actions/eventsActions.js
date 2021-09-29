@@ -6,7 +6,7 @@ import typeEventsFiltering from '../store_utilities/filtering';
 
 
 export const GET_EVENTS = 'GET_EVENTS';
-export const GET_EVENTS_FILTERED_TYPE = 'GET_EVENTS_FILTERED';
+export const GET_EVENTS_FILTERED = 'GET_EVENTS_FILTERED';
 export const GET_EVENTS_AGENDA = 'GET_EVENTS_AGENDA';
 export const GET_EVENTS_PINNED = 'GET_EVENTS_PINNED';
 
@@ -51,44 +51,28 @@ export const getEvents = () => {
 
 
 
-export const getEventsFilteredType = (type, when) => {
-    const filtered = [];
+export const getEventsFilteredType = ({ filterType, filterWhen}) => {
+   
     try {
         return async (dispatch) => {
+
                 const eventsFilteredAsyncStorage = await AsyncStorage.getItem(
                 'eventsStored');
-            try {
-            filtered = await typeEventsFiltering(JSON.parse(eventsFilteredAsyncStorage), type, when);                
-            } catch (error) {        
-            }
 
-            dispatch({
-                    type: GET_EVENTS_FILTERED_TYPE,
-                    payload: filtered,
-            });
-
+                // const filtered = await typeEventsFiltering(JSON.parse(eventsFilteredAsyncStorage), type, when);    
+                dispatch({
+                    type: GET_EVENTS_FILTERED,
+                    filterType,
+                    filterWhen,
+                    payload: JSON.parse(eventsFilteredAsyncStorage),
+                });         
         }
-
 
     } catch (error) {
         
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 export const getEventsAgenda = () => {

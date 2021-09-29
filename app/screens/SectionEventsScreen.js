@@ -77,8 +77,8 @@ const [dateCalendar, setDateCalendar] = useState();
 
 // Filtering function
 const handleFilterType = (type, value) => {
+        dataEventsReceived = dispatch(getEventsFilteredType({ filterType, filterWhen}))
 
-        dataEventsReceived = dispatch(getEventsFilteredType(filterType, filterWhen))
         setSubMenuDisplay(false);
         if (type === "what"){
         setFilterTypeName(value);}
@@ -87,6 +87,8 @@ const handleFilterType = (type, value) => {
         setFilterWhenName(value);
         }
 };
+
+
 
     // const dateSelected = (date) => {
     //     const filtering = dataEventsFiltered.filter((ele) =>

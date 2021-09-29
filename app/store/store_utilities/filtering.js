@@ -9,10 +9,9 @@ const friday = moment().weekday(5);
 const sunday = moment().weekday(7);
 
 export const typeEventsFiltering = (data, type, when) => {
-    const typeFilterResults = []
-    typeFilterResults = data; 
+    const typeFilterResults = []; 
 
-        if (type !== 'All' && when == 'Now') {
+        if (data && type !== 'All' && when == 'Now') {
             typeFilterResults = data.filter(
                     (ele) =>
                         moment(ele.utc).isBetween(timeNow, endOfDay) &&
@@ -22,7 +21,7 @@ export const typeEventsFiltering = (data, type, when) => {
                     return moment(a.utc).diff(b.utc);
                 });
         }
-        if (type !== 'All' && when == 'Tonight') {
+        if (data && type !== 'All' && when == 'Tonight') {
              typeFilterResults = data.filter(
                     (ele) =>
                         moment(ele.utc).isBetween(night, endOfDay) &&
@@ -32,7 +31,7 @@ export const typeEventsFiltering = (data, type, when) => {
                     return moment(a.utc).diff(b.utc);
                 });
         }
-        if (type !== 'All' && when == 'Tomorrow') {
+        if (data && type !== 'All' && when == 'Tomorrow') {
              typeFilterResults = data.filter(
                     (ele) =>
                         moment(ele.utc).isSame(tomorrow, 'day') &&
@@ -52,7 +51,7 @@ export const typeEventsFiltering = (data, type, when) => {
                     return moment(a.utc).diff(b.utc);
                 });
         }
-        if (type !== 'All' && when == 'Date') {
+        if (data && type !== 'All' && when == 'Date') {
              typeFilterResults = data.filter((ele) => ele.event.type == type)
                 .sort((a, b) => {
                     return moment(a.utc).diff(b.utc);
@@ -65,28 +64,28 @@ export const typeEventsFiltering = (data, type, when) => {
                     return moment(a.utc).diff(b.utc);
                 });
         }
-        if (type == 'All' && when == 'Tonight') {
+        if (data && type == 'All' && when == 'Tonight') {
              typeFilterResults = data.filter((ele) => moment(ele.utc).isBetween(night, endOfDay))
                 .sort((a, b) => {
                     return moment(a.utc).diff(b.utc);
                 });
         }
-        if (type == 'All' && when == 'Tomorrow') {
+        if (data && type == 'All' && when == 'Tomorrow') {
              typeFilterResults = data.filter((ele) => moment(ele.utc).isSame(tomorrow, 'day'))
                 .sort((a, b) => {
                     return moment(a.utc).diff(b.utc);
                 });
         }
-        if (type == 'All' && when == 'This Weekend') {
+        if (data && type == 'All' && when == 'This Weekend') {
             typeFilterResults = data.filter((ele) => moment(ele.utc).isBetween(friday, sunday))
                 .sort((a, b) => {
                     return moment(a.utc).diff(b.utc);
                 });
         }
-        if (type == 'All' && when == 'Date') {
+        if (data && type == 'All' && when == 'Date') {
             typeFilterResults = data;
         }
-        return typeFilterResults;
+    return typeFilterResults;
 }
 
 

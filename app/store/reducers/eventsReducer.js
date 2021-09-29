@@ -5,9 +5,11 @@ import {
     GET_EVENTS_PINNED,
 } from '../actions/eventsActions.js';
 
+import typeEventsFiltering from '../store_utilities/filtering';
+
 const inialState = {
     events: {},
-    eventsFiltered: {},
+    eventsFiltered: [],
     eventsAgenda: [],
     pinnedEvents: [],
 };
@@ -17,7 +19,9 @@ const eventsReducer = (state = inialState, action) => {
         case GET_EVENTS:
             return { ...state, events: action.payload };
         case GET_EVENTS_FILTERED:
-            return { ...state, eventsFiltered: action.payload };
+        const filteredEvents = typeEventsFiltering(action.payload,action.filterType, action.filterWhen);
+
+            return { ...state, eventsFiltered: filteredEvents };
         case GET_EVENTS_AGENDA:
             return { ...state, eventsAgenda: action.payload };
         case GET_EVENTS_PINNED:
